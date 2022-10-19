@@ -1,0 +1,14 @@
+Description: Fixes the compatibility with the version of Maven in Debian
+Author: Emmanuel Bourg <ebourg@apache.org>
+Forwarded: not-needed
+--- a/maven-surefire-common/src/main/java/org/apache/maven/plugin/surefire/SurefireHelper.java
++++ b/maven-surefire-common/src/main/java/org/apache/maven/plugin/surefire/SurefireHelper.java
+@@ -255,7 +255,7 @@
+     {
+         try
+         {
+-            return request.getFailureBehavior();
++            return request.getReactorFailureBehavior();
+         }
+         catch ( NoSuchMethodError e )
+         {

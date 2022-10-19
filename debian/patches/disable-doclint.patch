@@ -1,0 +1,23 @@
+Description: Disables doclint to fix the build failure with OpenJDK 17
+Author: Emmanuel Bourg <ebourg@apache.org>
+Forwarded: not-needed
+--- a/pom.xml
++++ b/pom.xml
+@@ -408,7 +408,7 @@
+                   <exclude>org/apache/maven/plugin/failsafe/xmlsummary/*.java</exclude>
+                 </excludes>
+                 <compilerArgs>
+-                  <arg>-Xdoclint:all</arg>
++                  <arg>-Xdoclint:none</arg>
+                 </compilerArgs>
+               </configuration>
+             </execution>
+@@ -416,7 +416,7 @@
+           <configuration>
+             <fork>true</fork>
+             <compilerArgs>
+-              <arg>-Xdoclint:all</arg>
++              <arg>-Xdoclint:none</arg>
+             </compilerArgs>
+           </configuration>
+         </plugin>

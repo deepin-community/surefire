@@ -1,0 +1,11 @@
+#pom.patch
+fix-junit-provider-selection.patch
+bypass-testng-version-check.patch
+dependency-plugin-configuration.patch
+doxia-compatibility.patch
+maven-compatibility.patch
+maven-shared-utils-dependency.patch
+jsr305-dependency.patch
+jdk-8186647-workaround.patch
+maven-shared-utils-compatibility.patch
+disable-doclint.patch

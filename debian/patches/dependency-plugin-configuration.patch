@@ -1,0 +1,23 @@
+Description: Use the Debian version of the artifacts referenced by the dependency plugin
+Author: Emmanuel Bourg <ebourg@apache.org>
+Forwarded: not-needed
+--- a/surefire-providers/surefire-junit47/pom.xml
++++ b/surefire-providers/surefire-junit47/pom.xml
+@@ -82,7 +82,7 @@
+                 <artifactItem>
+                   <groupId>junit</groupId>
+                   <artifactId>junit</artifactId>
+-                  <version>4.7</version>
++                  <version>4.x</version>
+                   <type>jar</type>
+                 </artifactItem>
+               </artifactItems>
+@@ -102,7 +102,7 @@
+                 <artifactItem>
+                   <groupId>junit</groupId>
+                   <artifactId>junit</artifactId>
+-                  <version>4.12</version>
++                  <version>4.x</version>
+                   <type>jar</type>
+                 </artifactItem>
+               </artifactItems>

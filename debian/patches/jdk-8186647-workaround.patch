@@ -1,0 +1,82 @@
+Description: Workaround for a javac regression
+Author: Emmanuel Bourg <ebourg@apache.org>
+Bug: http://bugs.java.com/bugdatabase/view_bug.do?bug_id=JDK-8186647
+--- a/maven-surefire-common/src/main/java/org/apache/maven/plugin/surefire/booterclient/ForkConfiguration.java
++++ b/maven-surefire-common/src/main/java/org/apache/maven/plugin/surefire/booterclient/ForkConfiguration.java
+@@ -56,7 +56,7 @@
+      * @param config               The startup configuration
+      * @param forkNumber           index of forked JVM, to be the replacement in the argLine
+      * @return CommandLine able to flush entire command going to be sent to forked JVM
+-     * @throws org.apache.maven.surefire.booter.SurefireBooterForkException
++     * throws org.apache.maven.surefire.booter.SurefireBooterForkException
+      *          when unable to perform the fork
+      */
+     @Nonnull
+--- a/maven-surefire-common/src/main/java/org/apache/maven/plugin/surefire/booterclient/lazytestprovider/AbstractCommandStream.java
++++ b/maven-surefire-common/src/main/java/org/apache/maven/plugin/surefire/booterclient/lazytestprovider/AbstractCommandStream.java
+@@ -52,7 +52,7 @@
+      * Possibly waiting for next command (see {@link #nextCommand()}) unless the stream is atomically
+      * closed (see {@link #isClosed()} returns {@code true}) before this method has returned.
+      *
+-     * @throws IOException stream error while waiting for notification regarding next test required by forked jvm
++     * throws IOException stream error while waiting for notification regarding next test required by forked jvm
+      */
+     protected void beforeNextCommand()
+         throws IOException
+@@ -74,7 +74,7 @@
+      * Used by single thread in StreamFeeder class.
+      *
+      * @return {@inheritDoc}
+-     * @throws IOException {@inheritDoc}
++     * throws IOException {@inheritDoc}
+      */
+     @SuppressWarnings( "checkstyle:magicnumber" )
+     @Override
+--- a/maven-surefire-common/src/main/java/org/apache/maven/plugin/surefire/booterclient/lazytestprovider/FlushReceiver.java
++++ b/maven-surefire-common/src/main/java/org/apache/maven/plugin/surefire/booterclient/lazytestprovider/FlushReceiver.java
+@@ -31,7 +31,7 @@
+     /**
+      * Performs a flush, releasing any buffered resources.
+      *
+-     * @throws IOException in case the flush operation failed
++     * throws IOException in case the flush operation failed
+      */
+     void flush()
+         throws IOException;
+--- a/maven-surefire-common/src/main/java/org/apache/maven/surefire/providerapi/ServiceLoader.java
++++ b/maven-surefire-common/src/main/java/org/apache/maven/surefire/providerapi/ServiceLoader.java
+@@ -102,7 +102,7 @@
+      *
+      * @param urlEnumeration The urls from the resource
+      * @return The set of service provider names
+-     * @throws IOException When reading the streams fails
++     * throws IOException When reading the streams fails
+      */
+     @Nonnull
+     @SuppressWarnings( "checkstyle:innerassignment" )
+--- a/surefire-providers/surefire-testng/src/main/java/org/apache/maven/surefire/testng/conf/TestNGMapConfigurator.java
++++ b/surefire-providers/surefire-testng/src/main/java/org/apache/maven/surefire/testng/conf/TestNGMapConfigurator.java
+@@ -36,11 +36,11 @@
+ /**
+  * TestNG configurator for 5.3+ versions. TestNG exposes a {@link org.testng.TestNG#configure(java.util.Map)} method.
+  * All supported TestNG options are passed in String format, except
+- * {@link org.testng.TestNGCommandLineArgs#LISTENER_COMMAND_OPT} which is {@link java.util.List List&gt;Class&lt;},
+- * {@link org.testng.TestNGCommandLineArgs#JUNIT_DEF_OPT} which is a {@link Boolean},
+- * {@link org.testng.TestNGCommandLineArgs#SKIP_FAILED_INVOCATION_COUNT_OPT} which is a {@link Boolean},
+- * {@link org.testng.TestNGCommandLineArgs#OBJECT_FACTORY_COMMAND_OPT} which is a {@link Class},
+- * {@link org.testng.TestNGCommandLineArgs#REPORTERS_LIST} which is a {@link java.util.List List&gt;ReporterConfig&lt;}.
++ * {@code org.testng.TestNGCommandLineArgs#LISTENER_COMMAND_OPT} which is {@link java.util.List List&gt;Class&lt;},
++ * {@code org.testng.TestNGCommandLineArgs#JUNIT_DEF_OPT} which is a {@link Boolean},
++ * {@code org.testng.TestNGCommandLineArgs#SKIP_FAILED_INVOCATION_COUNT_OPT} which is a {@link Boolean},
++ * {@code org.testng.TestNGCommandLineArgs#OBJECT_FACTORY_COMMAND_OPT} which is a {@link Class},
++ * {@code org.testng.TestNGCommandLineArgs#REPORTERS_LIST} which is a {@link java.util.List List&gt;ReporterConfig&lt;}.
+  * <br>
+  * Test classes and/or suite files are not passed along as options parameters, but configured separately.
+  *
+@@ -198,4 +198,4 @@
+             return val;
+         }
+     }
+-}
+\ No newline at end of file
++}

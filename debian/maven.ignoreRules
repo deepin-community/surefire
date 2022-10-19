@@ -1,0 +1,15 @@
+net.bytebuddy * * * * *
+org.apache.maven maven-plugin-descriptor * * * *
+org.apache.maven maven-toolchain * * * *
+org.apache.maven.plugins maven-assembly-plugin * * * *
+org.apache.maven.plugins maven-deploy-plugin * * * *
+org.apache.maven.plugins maven-enforcer-plugin * * * *
+org.apache.maven.plugins maven-site-plugin * * * *
+org.apache.maven.plugins maven-failsafe-plugin * * * *
+org.apache.maven.plugins maven-scm-publish-plugin * * * *
+org.apache.maven.plugins maven-surefire-plugin * * * *
+org.apache.rat apache-rat-plugin * * * *
+org.codehaus.mojo animal-sniffer-maven-plugin * * * *
+org.jacoco jacoco-maven-plugin * * * *
+org.powermock * * * * *
+org.xmlunit xmlunit-core * * * *

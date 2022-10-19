@@ -1,0 +1,61 @@
+Source: surefire
+Section: java
+Priority: optional
+Maintainer: Debian Java Maintainers <pkg-java-maintainers@lists.alioth.debian.org>
+Uploaders: Torsten Werner <twerner@debian.org>
+Build-Depends:
+ debhelper-compat (= 13),
+ default-jdk,
+ javacc,
+ junit,
+ junit4,
+ junit5,
+ libassertj-core-java,
+ libbuild-helper-maven-plugin-java,
+ libcommons-io-java,
+ libcommons-lang3-java (>= 3.7),
+ libfest-assert-java,
+ libjavacc-maven-plugin-java,
+ libjcip-annotations-java,
+ libjmock-java,
+ libjsr305-java,
+ libmaven-common-artifact-filters-java,
+ libmaven-dependency-plugin-java,
+ libmaven-plugin-testing-java,
+ libmaven-plugin-tools-java (>= 3.2),
+ libmaven-reporting-api-java,
+ libmaven-resources-plugin-java,
+ libmaven-shade-plugin-java,
+ libmaven-shared-utils-java,
+ libmockito-java,
+ libplexus-languages-java,
+ libplexus-velocity-java,
+ maven-debian-helper (>= 2.3.2~),
+ testng,
+ velocity
+Standards-Version: 4.5.1
+Vcs-Git: https://salsa.debian.org/java-team/surefire.git
+Vcs-Browser: https://salsa.debian.org/java-team/surefire
+Homepage: http://maven.apache.org/surefire/
+
+Package: libsurefire-java
+Architecture: all
+Depends: procps, ${maven:Depends}, ${misc:Depends}
+Suggests: ${maven:OptionalDepends}
+Description: Surefire test framework for Java
+ Maven is a software project management and comprehension tool. Based on the
+ concept of a project object model (POM), Maven can manage a project's build,
+ reporting and documentation from a central piece of information.
+ .
+ Maven's primary goal is to allow a developer to comprehend the complete
+ state of a development effort in the shortest period of time. In order to
+ attain this goal there are several areas of concern that Maven attempts
+ to deal with:
+ .
+    * Making the build process easy
+    * Providing a uniform build system
+    * Providing quality project information
+    * Providing guidelines for best practices development
+    * Allowing transparent migration to new features
+ .
+ This package ships the surefire test framework and the maven-surefire-plugin.

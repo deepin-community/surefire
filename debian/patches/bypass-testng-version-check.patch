@@ -1,0 +1,30 @@
+Description: Bypass the verification of the version of TestNG since it doesn't
+ work with the modified version installed in Debian. TestNG in Debian has
+ always been above the minimum version required by Surefire anyway.
+Author: Emmanuel Bourg <ebourg@apache.org>
+Forwarded: not-needed
+--- a/maven-surefire-common/src/main/java/org/apache/maven/plugin/surefire/AbstractSurefireMojo.java
++++ b/maven-surefire-common/src/main/java/org/apache/maven/plugin/surefire/AbstractSurefireMojo.java
+@@ -1352,7 +1352,7 @@
+                 return "org.apache.maven.surefire.testng.conf.TestNG60Configurator";
+             }
+ 
+-            throw new MojoExecutionException( "Unknown TestNG version " + version );
++            return "org.apache.maven.surefire.testng.conf.TestNG60Configurator";
+         }
+         catch ( InvalidVersionSpecificationException invsex )
+         {
+@@ -2060,13 +2060,6 @@
+ 
+         if ( artifact != null )
+         {
+-            VersionRange range = createVersionRange();
+-            if ( !range.containsVersion( new DefaultArtifactVersion( artifact.getVersion() ) ) )
+-            {
+-                throw new MojoExecutionException(
+-                    "TestNG support requires version 4.7 or above. You have declared version "
+-                        + artifact.getVersion() );
+-            }
+         }
+         else if ( projectArtifactName.equals( getTestNGArtifactName() ) )
+         {

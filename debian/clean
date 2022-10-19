@@ -1,0 +1,10 @@
+maven-surefire-common/dependency-reduced-pom.xml
+surefire-api/dependency-reduced-pom.xml
+surefire-booter/dependency-reduced-pom.xml
+surefire-providers/common-java5/dependency-reduced-pom.xml
+surefire-providers/surefire-junit3/dependency-reduced-pom.xml
+surefire-providers/surefire-junit4/dependency-reduced-pom.xml
+surefire-providers/surefire-junit47/dependency-reduced-pom.xml
+surefire-providers/surefire-junit-platform/dependency-reduced-pom.xml
+surefire-providers/surefire-testng-utils/dependency-reduced-pom.xml
+surefire-report-parser/dependency-reduced-pom.xml

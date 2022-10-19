@@ -1,0 +1,28 @@
+Description: Surefire can't correctly detect the 4.x version of
+ JUnit that is present in the Debian Maven Repository.
+ .
+ This patch corrects that - its safe to assume that its greater
+ than 4.7 as sid contains 4.8.2. The JUnit4Provider should
+ never get selected due to the way these two checks are combined.
+Author: James Page <james.page@ubuntu.com>
+Forwarded: not-needed
+
+--- a/maven-surefire-common/src/main/java/org/apache/maven/plugin/surefire/AbstractSurefireMojo.java
++++ b/maven-surefire-common/src/main/java/org/apache/maven/plugin/surefire/AbstractSurefireMojo.java
+@@ -1565,12 +1565,14 @@
+ 
+     private boolean isJunit47Compatible( Artifact artifact )
+     {
+-        return dependencyResolver.isWithinVersionSpec( artifact, "[4.7,)" );
++        return ( dependencyResolver.isWithinVersionSpec( artifact, "[4.7,)" ) ||
++                 ( artifact != null && "4.x".equals( artifact.getVersion() ) ) );
+     }
+ 
+     private boolean isAnyJunit4( Artifact artifact )
+     {
+-        return dependencyResolver.isWithinVersionSpec( artifact, "[4.0,)" );
++        return ( dependencyResolver.isWithinVersionSpec( artifact, "[4.0,)" ) ||
++                 ( artifact != null && "4.x".equals( artifact.getVersion() ) ) );
+     }
+ 
+     private static boolean isForkModeNever( String forkMode )

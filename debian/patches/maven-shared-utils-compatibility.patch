@@ -1,0 +1,70 @@
+Description: Fixes the compatibility with the version of maven-shared-utils in Debian
+Author: Emmanuel Bourg <ebourg@apache.org>
+Forwarded: no
+--- a/maven-surefire-common/src/main/java/org/apache/maven/plugin/surefire/report/StatelessXmlReporter.java
++++ b/maven-surefire-common/src/main/java/org/apache/maven/plugin/surefire/report/StatelessXmlReporter.java
+@@ -238,6 +238,10 @@
+             }
+             ppw.endElement(); // TestSuite
+         }
++        catch ( IOException e )
++        {
++            throw new RuntimeException( e );
++        }
+         finally
+         {
+             closeQuietly( fw );
+@@ -324,7 +328,7 @@
+     }
+ 
+     private static void startTestElement( XMLWriter ppw, WrappedReportEntry report, String reportNameSuffix,
+-                                          String timeAsString )
++                                          String timeAsString ) throws IOException
+     {
+         ppw.startElement( "testcase" );
+         ppw.addAttribute( "name", report.getReportName() );
+@@ -347,7 +351,7 @@
+     }
+ 
+     private void createTestSuiteElement( XMLWriter ppw, WrappedReportEntry report, TestSetStats testSetStats,
+-                                         String timeAsString )
++                                         String timeAsString ) throws IOException
+     {
+         ppw.startElement( "testsuite" );
+ 
+@@ -374,7 +378,7 @@
+ 
+     private static void getTestProblems( OutputStreamWriter outputStreamWriter, XMLWriter ppw,
+                                          WrappedReportEntry report, boolean trimStackTrace, OutputStream fw,
+-                                         String testErrorType, boolean createOutErrElementsInside )
++                                         String testErrorType, boolean createOutErrElementsInside ) throws IOException
+     {
+         ppw.startElement( testErrorType );
+ 
+@@ -431,7 +435,7 @@
+ 
+     // Create system-out and system-err elements
+     private static void createOutErrElements( OutputStreamWriter outputStreamWriter, XMLWriter ppw,
+-                                              WrappedReportEntry report, OutputStream fw )
++                                              WrappedReportEntry report, OutputStream fw ) throws IOException
+     {
+         EncodingOutputStream eos = new EncodingOutputStream( fw );
+         addOutputStreamElement( outputStreamWriter, eos, ppw, report.getStdout(), "system-out" );
+@@ -441,7 +445,7 @@
+     private static void addOutputStreamElement( OutputStreamWriter outputStreamWriter,
+                                          EncodingOutputStream eos, XMLWriter xmlWriter,
+                                          Utf8RecodingDeferredFileOutputStream utf8RecodingDeferredFileOutputStream,
+-                                         String name )
++                                         String name ) throws IOException
+     {
+         if ( utf8RecodingDeferredFileOutputStream != null && utf8RecodingDeferredFileOutputStream.getByteCount() > 0 )
+         {
+@@ -471,7 +475,7 @@
+      *
+      * @param xmlWriter The test suite to report to
+      */
+-    private static void showProperties( XMLWriter xmlWriter, Map<String, String> systemProperties )
++    private static void showProperties( XMLWriter xmlWriter, Map<String, String> systemProperties ) throws IOException
+     {
+         xmlWriter.startElement( "properties" );
+         for ( final Entry<String, String> entry : systemProperties.entrySet() )
