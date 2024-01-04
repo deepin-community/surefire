@@ -1,0 +1,115 @@
+From: Markus Koschany <apo@debian.org>
+Date: Fri, 24 Jun 2022 20:43:44 +0200
+Subject: maven-shared-utils 3.3.4 compatibility
+
+Forwarded: not-needed
+---
+ .../booterclient/DefaultForkConfiguration.java       |  9 +++++++++
+ .../surefire/report/DefaultReporterFactory.java      |  6 +++---
+ .../plugins/surefire/report/PluginConsoleLogger.java | 20 ++++----------------
+ 3 files changed, 16 insertions(+), 19 deletions(-)
+
+diff --git a/maven-surefire-common/src/main/java/org/apache/maven/plugin/surefire/booterclient/DefaultForkConfiguration.java b/maven-surefire-common/src/main/java/org/apache/maven/plugin/surefire/booterclient/DefaultForkConfiguration.java
+index 591491d..b9df82c 100644
+--- a/maven-surefire-common/src/main/java/org/apache/maven/plugin/surefire/booterclient/DefaultForkConfiguration.java
++++ b/maven-surefire-common/src/main/java/org/apache/maven/plugin/surefire/booterclient/DefaultForkConfiguration.java
+@@ -27,6 +27,7 @@
+ import org.apache.maven.surefire.booter.StartupConfiguration;
+ import org.apache.maven.surefire.booter.SurefireBooterForkException;
+ import org.apache.maven.surefire.util.internal.ImmutableMap;
++import org.apache.maven.shared.utils.cli.CommandLineException;
+ 
+ import javax.annotation.Nonnull;
+ import javax.annotation.Nullable;
+@@ -115,6 +116,9 @@ protected String extendJvmArgLine( @Nonnull String jvmArgLine )
+     public OutputStreamFlushableCommandline createCommandLine( @Nonnull StartupConfiguration config, int forkNumber )
+             throws SurefireBooterForkException
+     {
++      try
++      {
++
+         OutputStreamFlushableCommandline cli = new OutputStreamFlushableCommandline();
+ 
+         cli.setWorkingDirectory( getWorkingDirectory( forkNumber ).getAbsolutePath() );
+@@ -143,6 +147,11 @@ public OutputStreamFlushableCommandline createCommandLine( @Nonnull StartupConfi
+         resolveClasspath( cli, findStartClass( config ), config );
+ 
+         return cli;
++      }
++      catch ( CommandLineException e )
++      {
++          throw new SurefireBooterForkException( e.getLocalizedMessage(), e );
++      }
+     }
+ 
+     @Nonnull
+diff --git a/maven-surefire-common/src/main/java/org/apache/maven/plugin/surefire/report/DefaultReporterFactory.java b/maven-surefire-common/src/main/java/org/apache/maven/plugin/surefire/report/DefaultReporterFactory.java
+index 3db6ebd..88faab4 100644
+--- a/maven-surefire-common/src/main/java/org/apache/maven/plugin/surefire/report/DefaultReporterFactory.java
++++ b/maven-surefire-common/src/main/java/org/apache/maven/plugin/surefire/report/DefaultReporterFactory.java
+@@ -467,13 +467,13 @@ private void log( String s )
+     private void info( String s )
+     {
+         MessageBuilder builder = buffer();
+-        consoleLogger.info( builder.info( s ).toString() );
++        consoleLogger.info( builder.a( s ).toString() );
+     }
+ 
+-    private void err( String s )
++    private void warning( String s )
+     {
+         MessageBuilder builder = buffer();
+-        consoleLogger.error( builder.error( s ).toString() );
++        consoleLogger.warning( builder.warning( s ).toString() );
+     }
+ 
+     private void success( String s )
+diff --git a/maven-surefire-report-plugin/src/main/java/org/apache/maven/plugins/surefire/report/PluginConsoleLogger.java b/maven-surefire-report-plugin/src/main/java/org/apache/maven/plugins/surefire/report/PluginConsoleLogger.java
+index 0e0fb99..cf51d0e 100644
+--- a/maven-surefire-report-plugin/src/main/java/org/apache/maven/plugins/surefire/report/PluginConsoleLogger.java
++++ b/maven-surefire-report-plugin/src/main/java/org/apache/maven/plugins/surefire/report/PluginConsoleLogger.java
+@@ -53,18 +53,12 @@ public boolean isDebugEnabled()
+     @Override
+     public void debug( String message )
+     {
+-        if ( mojoLogger.isDebugEnabled() )
+-        {
+-            mojoLogger.debug( createAnsiBuilder( message ).debug( message ).toString() );
+-        }
++        mojoLogger.debug( createAnsiBuilder( message ).a( message ).toString() );
+     }
+ 
+     public void debug( CharSequence content, Throwable error )
+     {
+-        if ( mojoLogger.isDebugEnabled() )
+-        {
+-            mojoLogger.debug( content, error );
+-        }
++        mojoLogger.debug( content, error );
+     }
+ 
+     @Override
+@@ -76,10 +70,7 @@ public boolean isInfoEnabled()
+     @Override
+     public void info( String message )
+     {
+-        if ( mojoLogger.isInfoEnabled() )
+-        {
+-            mojoLogger.info( createAnsiBuilder( message ).info( message ).toString() );
+-        }
++        mojoLogger.info( createAnsiBuilder( message ).a( message ).toString() );
+     }
+ 
+     @Override
+@@ -114,10 +105,7 @@ public boolean isErrorEnabled()
+     @Override
+     public void error( String message )
+     {
+-        if ( mojoLogger.isErrorEnabled() )
+-        {
+-            mojoLogger.error( createAnsiBuilder( message ).error( message ).toString() );
+-        }
++        mojoLogger.error( createAnsiBuilder( message ).failure( message ).toString() );
+     }
+ 
+     @Override
