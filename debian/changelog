@@ -1,3 +1,11 @@
+surefire (2.22.3-2) unstable; urgency=medium
+
+  * Team upload.
+  * Fix FTBFS with maven-shared-utils 3.3.4. (Closes: #1013611)
+  * Declare compliance with Debian Policy 4.6.1.
+
+ -- Markus Koschany <apo@debian.org>  Fri, 24 Jun 2022 20:46:32 +0200
+
 surefire (2.22.3-1) unstable; urgency=medium
 
   * Team upload.

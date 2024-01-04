@@ -9,3 +9,4 @@ jsr305-dependency.patch
 jdk-8186647-workaround.patch
 maven-shared-utils-compatibility.patch
 disable-doclint.patch
+maven-shared-utils-3.3.4-compatibility.patch

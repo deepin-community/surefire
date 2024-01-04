@@ -33,7 +33,7 @@ Build-Depends:
  maven-debian-helper (>= 2.3.2~),
  testng,
  velocity
-Standards-Version: 4.5.1
+Standards-Version: 4.6.1
 Vcs-Git: https://salsa.debian.org/java-team/surefire.git
 Vcs-Browser: https://salsa.debian.org/java-team/surefire
 Homepage: http://maven.apache.org/surefire/
